@@ -1,0 +1,1 @@
+# tailwind-config-colors-getter

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
    content: [
       "./index.html",
       "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -451,6 +451,7 @@ module.exports = {
          'aaa-tailwind-rose-800': '#9f1239',
          'aaa-tailwind-rose-900': '#881337',
          'aaa-tailwind-rose-950': '#4c0519',
+
 
       },
       extend: {

@@ -19,7 +19,7 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 ## Change log
 
-###### 2023-06-15
+###### 2023-06-16
 
 - Create the area to show the final results
 

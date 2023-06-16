@@ -1,13 +1,12 @@
 import figmaConfig from './tailwind.config.js'
-console.log(`%c==ORIG [ File ]:`, 'color:#FFFFFF; border-radius:4px; background:#253031; padding:4px 8px;', figmaConfig);
+console.log(`%c==ORIG [ File ]:`, 'color:#FFFFFF; border-radius:4px; background:#253031; padding:4px 8px;', figmaConfig)
 
-let finalResult = {}
-let finalArray = []
+const finalObj = {}
 
 const colors = figmaConfig.theme.colors
-console.log(`%c==ORIG [ Colors OBJ ]:`, 'color: #FFFFFF; border-radius:4px; background: #253031; padding: 4px 8px;', colors);
+console.log(`%c==ORIG [ Colors OBJ ]:`, 'color: #FFFFFF; border-radius:4px; background: #253031; padding: 4px 8px;', colors)
 
-Object.entries(colors).forEach(([name, color], k) => {
+Object.entries(colors).forEach(([name, color], i) => {
    // 🟩DONE — 01. Разбить "NAME" по тире и получить массив значений
    const nameArr = name.split('-')
    // console.log(`%cResult ${nameArr.length}:`, 'color: #453643; border-radius:4px; background: #E3E3E3; padding: 4px 8px;', nameArr);
@@ -47,20 +46,64 @@ Object.entries(colors).forEach(([name, color], k) => {
    }
 })
 
-// 🟥Полученный элемент использовать как название объекта и объединить в массив палеток с цветами
-// 🟥Элемент eg. "500" добавить в объект как ключ
-// 🟥Элемент "COLOR" (HEX цвет) добавить в объект как значение в соответствии с ключом
-// 🟥Каждый объект с градацией по цветам объединить в один общий объект
+// 🟩DONE — 10. Полученный элемент использовать как название объекта и объединить в массив палеток с цветами
+// 🟩DONE — 11. Элемент eg. "500" добавить в объект как ключ
+// 🟩DONE — 12. Элемент "COLOR" (HEX цвет) добавить в объект как значение в соответствии с ключом
+// 🟩DONE — 13. Каждый объект с градацией по цветам объединить в один общий объект
 function mergeResult(objName, key, value) {
-   console.log(objName, key, value)
-   finalResult = {
-      [objName]: {
-         [key]: value
-      }
+   // console.log(objName, key, value)
+   // finalObj = {
+   //    [objName]: {
+   //       [key]: value
+   //    }
+   // }
+   // finalArray.push(finalObj)
+
+   if(!finalObj[objName]){
+      console.log(`🟥 Palette "${objName.toUpperCase()}" doesn\'t exist, creating`)
+      finalObj[objName] = {}
    }
-   finalArray.push(finalResult)
+   console.log(finalObj[objName], [key]) // Fill the object with results
+   finalObj[objName][key] = value
 }
 
 console.log('= = = = = = = = = = = = = = = = = = = = = = = = = = = = ');
-console.log(`%cFinal [ OBJ ]:`, 'color: #FFFFFF; border-radius:4px; background: #2978A0; padding: 4px 8px;', finalResult);
-console.log(`%cFinal [ ARR ]:`, 'color: #000000; border-radius:4px; background: #7CB518; padding: 4px 8px;', finalArray);
+console.log(`%cFinal [ OBJ ]:`, 'color: #FFFFFF; border-radius:4px; background: #2978A0; padding: 4px 8px;', finalObj);
+
+// 🟩DONE — FILL THE HTML TABLE
+setTimeout(fillColorPalette, 1000)
+function fillColorPalette() {
+// 🟩DONE — Add unique palette DIV
+   Object.entries(finalObj).forEach(([paletteTitle, variants]) => {
+      const resultAreaCode = document.querySelector('.result-area__code')
+      const paletteGroup = document.createElement('div')
+      const paletteElTitle = document.createElement('div')
+      const paletteElClose = document.createElement('div')
+      paletteGroup.classList.add('palette-group', `palette-${paletteTitle}`)
+      paletteElTitle.classList.add('palette-title', `${paletteTitle}`)
+      resultAreaCode.appendChild(paletteGroup)
+      paletteGroup.appendChild(paletteElTitle)
+      paletteElTitle.innerText = `'${paletteTitle}': {`
+
+      // 🟩DONE — Add each variant with HEX color
+      Object.entries(variants).forEach(([name, color]) => {
+         const paletteVariant = document.createElement('div')
+         paletteVariant.classList.add('color-variant', `${paletteTitle}-${name}`)
+         paletteGroup.appendChild(paletteVariant)
+         paletteVariant.innerHTML += `'${name}': '${color}',`
+         paletteGroup.appendChild(paletteElClose)
+         paletteElClose.classList.add('palette-closer', `${paletteTitle}`)
+         paletteElClose.innerText = `},`
+      })
+   })
+
+   // 🟩DONE — Move "default" variant from the end to the beginning
+   const paletteGroups = document.querySelectorAll('.palette-group')
+   paletteGroups.forEach(list => {
+      let childEls = list.children
+      const defaultLastEl = childEls[childEls.length -2]
+      defaultLastEl.remove() // 🟩
+      list.prepend(defaultLastEl) // 🟩
+      childEls[1].insertAdjacentElement("afterend", childEls[0]);
+   })
+}

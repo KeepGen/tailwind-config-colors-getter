@@ -4,13 +4,22 @@ console.log(`%c==ORIG [ File ]:`, 'color:#FFFFFF; border-radius:4px; background:
 
 const finalObj = {}
 
+const mainArea = document.querySelector('.main')
+const buttonsArea = document.createElement('div')
+const btnCopy = document.createElement('button')
+mainArea.appendChild(buttonsArea)
+buttonsArea.appendChild(btnCopy)
+buttonsArea.classList.add('result-area__buttons')
+btnCopy.classList.add('result-area__btn-copy')
+btnCopy.innerText = 'Copy to clipboard'
+
 const colors = figmaConfig.theme.colors
 console.log(`%c==ORIG [ Colors OBJ ]:`, 'color: #FFFFFF; border-radius:4px; background: #253031; padding: 4px 8px;', colors)
 
 Object.entries(colors).forEach(([name, color]) => {
    // 🟩DONE — 01. Разбить "NAME" по тире и получить массив значений
    const nameArr = name.split('-')
-   // console.log(`%cResult ${nameArr.length}:`, 'color: #453643; border-radius:4px; background: #E3E3E3; padding: 4px 8px;', nameArr);
+   // console.log(`%cResult ${nameArr.length}:`, 'color: #453643; border-radius:4px; background: #E3E3E3; padding: 4px 8px;', nameArr)
 
    // 🟩DONE — 02. Перезаписать в массив только те значения, которые НЕ используют "TAILWIND" и "BASE"
    if (nameArr.includes('tailwind') || nameArr.includes('base')) {
@@ -69,11 +78,13 @@ function mergeResult(objName, key, value) {
    finalObj[objName][key] = value
 }
 
-console.log('= = = = = = = = = = = = = = = = = = = = = = = = = = = = ');
-console.log(`%cFinal [ OBJ ]:`, 'color: #FFFFFF; border-radius:4px; background: #2978A0; padding: 4px 8px;', finalObj);
+console.log('= = = = = = = = = = = = = = = = = = = = = = = = = = = = ')
+console.log(`%cFinal [ OBJ ]:`, 'color: #FFFFFF; border-radius:4px; background: #2978A0; padding: 4px 8px;', finalObj)
+console.log('= = = = = = = = = = = = = = = = = = = = = = = = = = = = ')
 
 // 🟩DONE — FILL THE HTML TABLE
 setTimeout(fillColorPalette, 1000)
+
 function fillColorPalette() {
 // 🟩DONE — Add unique palette DIV
    Object.entries(finalObj).forEach(([paletteTitle, variants]) => {
@@ -108,8 +119,65 @@ function fillColorPalette() {
    paletteGroups.forEach(list => {
       let childEls = list.children
       const defaultLastEl = childEls[childEls.length - 2]
-      defaultLastEl.remove() // 🟩
-      list.prepend(defaultLastEl) // 🟩
-      childEls[1].insertAdjacentElement("afterend", childEls[0]);
+      defaultLastEl.remove()
+      list.prepend(defaultLastEl)
+      childEls[1].insertAdjacentElement("afterend", childEls[0])
    })
+}
+
+// 🟩DONE — Add the copy button below the area result
+const finalObjJSON = JSON.stringify(finalObj)
+function copyPaletteConfig() {
+   navigator.clipboard.writeText(finalObjJSON)
+   btnCopy.innerText = 'Config copied!'
+   btnCopy.classList.add('--copied')
+   setTimeout(restoreCopyBtn, 4000)
+}
+btnCopy.addEventListener('click', copyPaletteConfig)
+
+// 🟩DONE — Restore the copy button values and styles
+function restoreCopyBtn() {
+   btnCopy.innerText = 'Copy to clipboard'
+   btnCopy.classList.remove('--copied')
+}
+
+// 🟩DONE — Download the JSON file
+const data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(finalObj));
+const downloadLink = document.createElement('a');
+buttonsArea.appendChild(downloadLink)
+downloadLink.classList.add('result-area__btn-download')
+downloadLink.href = 'data:' + data;
+downloadLink.download = 'tailwind-color.config.json';
+downloadLink.innerHTML = 'Download config file';
+
+// 🟨 — Upload code function
+const btnUploadLabel = document.createElement('label')
+const btnUploadInput = document.createElement('input')
+btnUploadInput.setAttribute('type', 'file')
+btnUploadInput.setAttribute('onChange', 'previewFile()')
+btnUploadInput.classList.add('upload-file-input')
+btnUploadLabel.classList.add('upload-file-label')
+buttonsArea.appendChild(btnUploadLabel)
+btnUploadLabel.appendChild(btnUploadInput)
+
+function previewFile() {
+   const content = document.querySelector(".upload-result")
+   const [file] = document.querySelector("input[type=file]").files
+   const reader = new FileReader()
+
+   reader.addEventListener(
+      "load",
+      () => {
+         console.log(`%cFile loaded:`, 'color: #000000; border-radius:4px; background: #7CB518; padding: 3px 6px;')
+         // content.innerText = reader.result // 🟨Displays the uploaded file content (as text)
+         console.log(reader)
+         console.log(reader.result)
+      },
+      false
+   )
+
+   if (file) {
+      reader.readAsText(file)
+      console.log('Is file')
+   }
 }

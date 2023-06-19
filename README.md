@@ -8,11 +8,11 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 #### In Progress:
 
-- Add the button below the result area to copy the palette color config
+- Check how to automate the process (upload the original palette and generate the new format)
 
 #### Backlog:
 
-- Check how to automate the process (upload the original palette and generate the new format)
+- Copied text must be formatted (as JSON), not as one line content
 
 ---
 
@@ -20,8 +20,11 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 ###### 2023-06-19
 
+- Add responsive styles
 - Add styles for displayed HTML information (`color palette`, `color variants`)
 - Add a small square showing a color preview
+- Add the button below the result area to `copy` the palette color config
+- Add the download button
 
 ###### 2023-06-16
 

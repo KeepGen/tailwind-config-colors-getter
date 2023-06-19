@@ -8,8 +8,7 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 #### In Progress:
 
-- Add styles for displayed HTML information (`color palette`, `color variants`)
-- Add a small square showing a color preview
+- Add the button below the result area to copy the palette color config
 
 #### Backlog:
 
@@ -18,6 +17,11 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 ---
 
 ## Change log
+
+###### 2023-06-19
+
+- Add styles for displayed HTML information (`color palette`, `color variants`)
+- Add a small square showing a color preview
 
 ###### 2023-06-16
 

@@ -4,7 +4,7 @@ export default {
       "./src/**/*.{vue,js,ts,jsx,tsx}",
    ],
    theme: {
-
+      'test': {},
       fontSize: {
          'aaa-9': '9px',
          'aaa-10': '10px',

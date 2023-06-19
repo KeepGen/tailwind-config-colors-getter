@@ -1,4 +1,5 @@
 import figmaConfig from './tailwind.config.js'
+
 console.log(`%c==ORIG [ File ]:`, 'color:#FFFFFF; border-radius:4px; background:#253031; padding:4px 8px;', figmaConfig)
 
 const finalObj = {}
@@ -6,13 +7,13 @@ const finalObj = {}
 const colors = figmaConfig.theme.colors
 console.log(`%c==ORIG [ Colors OBJ ]:`, 'color: #FFFFFF; border-radius:4px; background: #253031; padding: 4px 8px;', colors)
 
-Object.entries(colors).forEach(([name, color], i) => {
+Object.entries(colors).forEach(([name, color]) => {
    // 🟩DONE — 01. Разбить "NAME" по тире и получить массив значений
    const nameArr = name.split('-')
    // console.log(`%cResult ${nameArr.length}:`, 'color: #453643; border-radius:4px; background: #E3E3E3; padding: 4px 8px;', nameArr);
 
    // 🟩DONE — 02. Перезаписать в массив только те значения, которые НЕ используют "TAILWIND" и "BASE"
-   if(nameArr.includes('tailwind') || nameArr.includes('base')) {
+   if (nameArr.includes('tailwind') || nameArr.includes('base')) {
       return
    } else {
       nameArr.join()
@@ -21,8 +22,9 @@ Object.entries(colors).forEach(([name, color], i) => {
    // 🟩DONE — 03. Удалить из массива первое значение "мусорный" префикс (например "AAA")
    // 🟩DONE — 04. Удалить из массива значения где встречается "EXTRAS" и разделить "•"
    const clearResults = nameArr.filter(clearUnused)
+
    function clearUnused(el) {
-      if(el !== 'aaa' && el !== 'extras' && el !== '•') {
+      if (el !== 'aaa' && el !== 'extras' && el !== '•') {
          return el
       }
    }
@@ -32,15 +34,15 @@ Object.entries(colors).forEach(([name, color], i) => {
    // 🟩DONE — 07. Для остальных элементов – убрать вариант (например "500"), оставшиеся значения сконкатинировать в одно название через дефис
    // 🟩DONE — 08. Объеденённое значение сохранить как название нового объекта, в который надо добавить значения (например "имя": "HEX код")
    // 🟩DONE — 09. Если имя состоит из нескольких элементов (в массиве), их нужно объединить
-   if(clearResults[clearResults.length -1] === 'default') {
-      const lastElDefault = clearResults[clearResults.length -1]
-      const beforeDefault = clearResults[clearResults.length -2]
+   if (clearResults[clearResults.length - 1] === 'default') {
+      const lastElDefault = clearResults[clearResults.length - 1]
+      const beforeDefault = clearResults[clearResults.length - 2]
       clearResults.pop()
       clearResults.pop()
       mergeResult(clearResults.join("-"), lastElDefault, color)
       mergeResult(clearResults.join("-"), beforeDefault, color)
    } else {
-      const lastElDefault = clearResults[clearResults.length -1]
+      const lastElDefault = clearResults[clearResults.length - 1]
       clearResults.pop()
       mergeResult(clearResults.join("-"), lastElDefault, color)
    }
@@ -59,7 +61,7 @@ function mergeResult(objName, key, value) {
    // }
    // finalArray.push(finalObj)
 
-   if(!finalObj[objName]){
+   if (!finalObj[objName]) {
       console.log(`🟥 Palette "${objName.toUpperCase()}" doesn\'t exist, creating`)
       finalObj[objName] = {}
    }
@@ -83,17 +85,21 @@ function fillColorPalette() {
       paletteElTitle.classList.add('palette-title', `${paletteTitle}`)
       resultAreaCode.appendChild(paletteGroup)
       paletteGroup.appendChild(paletteElTitle)
-      paletteElTitle.innerText = `'${paletteTitle}': {`
+      paletteElTitle.innerHTML = `<span style="color: #fd7d0e">'${paletteTitle}'</span><span style="color: #8d8d8d">: {</span>`
 
       // 🟩DONE — Add each variant with HEX color
       Object.entries(variants).forEach(([name, color]) => {
          const paletteVariant = document.createElement('div')
          paletteVariant.classList.add('color-variant', `${paletteTitle}-${name}`)
          paletteGroup.appendChild(paletteVariant)
-         paletteVariant.innerHTML += `'${name}': '${color}',`
+         // 🟩DONE — Add to the HTML page variants, colors and color preview box with styles
+         paletteVariant.innerHTML +=
+            `<div class="color-variant__color-preview" style="background: ${color}"></div>
+            <div class="color-variant__value">'${name}'</div> :&nbsp;
+            <div class="color-variant__hex">'${color}'</div><div style="color: #FFA500">,</div>`
          paletteGroup.appendChild(paletteElClose)
          paletteElClose.classList.add('palette-closer', `${paletteTitle}`)
-         paletteElClose.innerText = `},`
+         paletteElClose.innerHTML = `<span style="color: #8d8d8d">},</span>`
       })
    })
 
@@ -101,7 +107,7 @@ function fillColorPalette() {
    const paletteGroups = document.querySelectorAll('.palette-group')
    paletteGroups.forEach(list => {
       let childEls = list.children
-      const defaultLastEl = childEls[childEls.length -2]
+      const defaultLastEl = childEls[childEls.length - 2]
       defaultLastEl.remove() // 🟩
       list.prepend(defaultLastEl) // 🟩
       childEls[1].insertAdjacentElement("afterend", childEls[0]);

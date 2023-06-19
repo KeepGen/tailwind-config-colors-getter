@@ -12,7 +12,7 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 #### Backlog:
 
-- Copied text must be formatted (as JSON), not as one line content
+- TBA...
 
 ---
 
@@ -20,6 +20,7 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 ###### 2023-06-19
 
+- Copied text and download config file must be formatted (as JSON), not as one line content
 - Add responsive styles
 - Add styles for displayed HTML information (`color palette`, `color variants`)
 - Add a small square showing a color preview

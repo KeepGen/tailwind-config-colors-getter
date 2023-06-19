@@ -84,7 +84,6 @@ console.log('= = = = = = = = = = = = = = = = = = = = = = = = = = = = ')
 
 // 🟩DONE — FILL THE HTML TABLE
 setTimeout(fillColorPalette, 1000)
-
 function fillColorPalette() {
 // 🟩DONE — Add unique palette DIV
    Object.entries(finalObj).forEach(([paletteTitle, variants]) => {
@@ -126,7 +125,7 @@ function fillColorPalette() {
 }
 
 // 🟩DONE — Add the copy button below the area result
-const finalObjJSON = JSON.stringify(finalObj)
+const finalObjJSON = JSON.stringify(finalObj, null, "\t")
 function copyPaletteConfig() {
    navigator.clipboard.writeText(finalObjJSON)
    btnCopy.innerText = 'Config copied!'
@@ -142,7 +141,7 @@ function restoreCopyBtn() {
 }
 
 // 🟩DONE — Download the JSON file
-const data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(finalObj));
+const data = "text/json;charset=utf-8," + encodeURIComponent(finalObjJSON)
 const downloadLink = document.createElement('a');
 buttonsArea.appendChild(downloadLink)
 downloadLink.classList.add('result-area__btn-download')

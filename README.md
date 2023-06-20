@@ -4,6 +4,15 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 ---
 
+## Getting started
+
+- Clone or download the **Tailwind Config Colors Getter** project.
+- Use `npm install` to install the dependencies
+- Use `npm run dev` to start the development
+- Use `npm run prod` to prepare files for production
+
+---
+
 ## Tasks
 
 #### In Progress:
@@ -18,9 +27,14 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 ## Change log
 
+###### 2023-06-20
+
+- Add `Vite` for `Vercel` deployment
+- Add `Getting started` section
+
 ###### 2023-06-19
 
-- Copied text and download config file must be formatted (as JSON), not as one line content
+- Copied text and download `config file` must be formatted (as `JSON`), not as one line content
 - Add responsive styles
 - Add styles for displayed HTML information (`color palette`, `color variants`)
 - Add a small square showing a color preview

@@ -6,26 +6,14 @@
    <link href="https://fonts.googleapis.com" rel="preconnect">
    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
    <link
-      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;700&family=Lato:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;700&display=swap"
       rel="stylesheet">
    <title>Tailwind Config file refactor — From Figma palette plugin to Tailwind JS file format</title>
+
    <style>
       body {
          margin: 0;
-         min-height: 100dvh;
-      }
-
-      button {
-         min-height: 35px;
-         display: block;
-         font-family: 'Inconsolata', monospace;
-         font-size: 14px;
-         border: none;
-         border-radius: 4px;
-         padding: 8px 16px;
-         margin: 0 auto;
-         cursor: pointer;
-         transition: .3s;
+         background-color: #0e567e;
       }
 
       .page {
@@ -38,6 +26,7 @@
          line-height: 1.4;
          color: #ffffff;
          background-color: #0e567e;
+         border: 1px solid #0a496c;
          padding: 20px;
          margin: 0 auto;
          overflow-x: hidden;
@@ -51,6 +40,7 @@
       }
 
       .page__subtitle {
+         font-size: 16px;
          font-weight: 400;
          border-top: 1px dashed #808080;
          padding: 20px 0;
@@ -118,6 +108,20 @@
          pointer-events: none;
       }
 
+      .btn {
+         display: inline-block;
+         font-family: 'Inconsolata', monospace;
+         font-size: 14px;
+         text-decoration: none;
+         border: none;
+         border-radius: 4px;
+         background-color: transparent;
+         padding: 8px 16px;
+         margin: 0 auto;
+         cursor: pointer;
+         transition: .3s;
+      }
+
       .result-area__btn-copy {
          background-color: #f48638;
       }
@@ -133,24 +137,26 @@
       }
 
       .result-area__btn-download {
-         display: inline-block;
-         font-family: 'Inconsolata', monospace;
-         font-size: 14px;
-         text-decoration: none;
          color: #f48638;
          border: 1px solid #f48638;
-         border-radius: 4px;
-         background-color: transparent;
-         padding: 8px 16px;
-         margin: 0 auto;
-         cursor: pointer;
-         transition: .3s;
       }
 
       .result-area__btn-download:hover {
          background-color: #f4863850;
          border-color: #e86608;
          color: #e86608;
+      }
+
+      .result-area__btn-back {
+         background-color: #2586d5;
+         color: #ffffff;
+         margin-top: 50px;
+      }
+
+      .result-area__btn-back:hover {
+         background-color: #207ac4;
+         color: #ffffff;
+         margin-top: 50px;
       }
 
       ::file-selector-button:hover {
@@ -193,11 +199,25 @@
       }
 
       .upload-file-label {
+         position: relative;
          max-width: 100%;
          display: flex;
          background-color: #41414175;
          border-radius: 4px;
          padding: 10px 0;
+      }
+
+      .page__wrong-file {
+         position: absolute;
+         right: 0;
+         bottom: 3px;
+         width: 180px;
+         font-size: 14px;
+         color: #8B0000;
+         text-align: center;
+         background-color: #FFFF00;
+         border: 1px solid #FFFF00;
+         padding: 2px 4px;
       }
 
       input[type=file]::file-selector-button {
@@ -266,35 +286,43 @@
             margin: 0;
          }
       }
-
    </style>
 </head>
 <body>
 
 <div class="page">
    <h1 class="page__title">Tailwind Color Palette Config</h1>
-   <p class="page__description">This tool can help you refactor the <span class="text__accent">tailwind.config.js</span> file received in the Figma plugin "<a href="https://www.figma.com/community/plugin/1109707301583496087/Figma-to-Tailwind-config" target="_blank" rel="nofollow">Figma to Tailwind config</a>". Uploading your config file, the tool will prepare the plugin config file clearing unused code and re-grouping palette colors into separate palettes ready to paste to your working project Tailwind config file.
-      <br /><span style="text-decoration: underline; text-decoration-color: #7aace8;">PS. Check the browser's console in case something works wrong.</span>
+
+   <p class="page__description">
+      This tool can help you refactor the <span class="text__accent">tailwind.config.js</span> file received in the Figma plugin "<a href="https://www.figma.com/community/plugin/1109707301583496087/Figma-to-Tailwind-config" target="_blank" rel="nofollow">Figma to Tailwind config</a>". Uploading your config file, the tool will prepare the plugin config file clearing unused code and re-grouping palette colors into separate palettes ready to paste to your working project Tailwind config file.
    </p>
+
    <h3 class="page__subtitle"><span class="page__subtitle--step">Step 1:</span> Upload <span class="text__accent">tailwind.config.js</span> file. Usually in a few seconds your uploaded config file will be refactored into new (cleared) format</h3>
+
    <label class="upload-file-label">
       <input class="upload-file-input" onchange="previewFile()" type="file" accept=".js">
    </label>
 
    <h3 class="page__subtitle"><span class="page__subtitle--step">Step 2:</span> Check how looks the new color palette format shown in preview area placed below:</h3>
+
    <div class="result-area">
       <div class="result-area__code"></div>
    </div>
 
    <h3 class="page__subtitle"><span class="page__subtitle--step">Step 3:</span> If the result is as expected, just copy it to clipboard or download the tailwind-colors.config.js file using one of following buttons:</h3>
-   <div class="result-area__buttons">
-      <button class="result-area__btn-copy" disabled>Copy result to clipboard</button>
 
-      <a class="result-area__btn-download" aria-label="disabled">Download colors in JS format</a>
+   <div class="result-area__buttons">
+      <button class="result-area__btn-copy btn" disabled>Copy result to clipboard</button>
+
+      <a class="result-area__btn-download btn" aria-label="disabled">Download colors in JS format</a>
+
+      <a href="/" class="result-area__btn-back btn">Back to main page</a>
    </div>
 </div>
 
 <script>
+   const uploadArea = document.querySelector('.upload-file-label')
+   const errorEl = document.createElement('div')
    const btnCopy = document.querySelector('.result-area__btn-copy')
    const downloadLink = document.querySelector('.result-area__btn-download')
    const resultAreaCode = document.querySelector('.result-area__code')
@@ -309,10 +337,15 @@
             btnCopy.setAttribute('disabled','')
             downloadLink.setAttribute('aria-label','disabled')
             resultAreaCode.innerText = ''
-            if(!reader.result) {
-               console.log(`%cStatus: ERROR | STEP 1.1:\n`, 'color: #FFFFFF; border-radius:4px; background: #E53D00; padding: 4px 8px;', 'During this process an error occurred', 'Uploading failed. Please, check received from Figma tailwind.config.js file and make sure that it\'s real config file')
+            errorEl.remove()
+
+            if(!reader.result.startsWith('module.exports = ')) {
+               console.log(`%cStatus: ERROR\n`, 'color: #FFFFFF; border-radius:4px; background: #E53D00; padding: 4px 8px;', 'WRONG FILE FORMAT. Please, check the "Figma Tailwind config" file and make sure that it\'s real config file. It MUST start with "module.exports = " code')
+               errorEl.classList.add('page__wrong-file')
+               uploadArea.appendChild(errorEl)
+               errorEl.innerHTML = `<span style="display: block; text-transform: uppercase; font-weight: 700;">wrong file</span> check console for details`
             } else {
-               console.log(`%cStatus: OK | STEP 1.1 | Uploaded content:\n`, 'color: #000000; border-radius:4px; background: #7CB518; padding: 4px 8px;', reader.result)
+               console.log(`%cStatus: OK | Uploaded content:\n`, 'color: #000000; border-radius:4px; background: #7CB518; padding: 4px 8px;', reader.result)
             }
 
             const clearedResult = eval(reader.result.replace('module.exports = ', 'config = '))
@@ -329,10 +362,10 @@
    function startRegrouping(readerResult) {
       const finalObj = {}
       const colors = readerResult.theme.colors
-      if(!colors) {
-         console.log(`%cStatus: ERROR | STEP 1.2 | Isolate the colors:\n`, 'color: #FFFFFF; border-radius:4px; background: #E53D00; padding: 4px 8px;', 'Colors isolation failed! Please, check uploaded config file and make sure that it\'s real config file or COLORS object exist inside.')
+      if (!colors) {
+         console.log(`%cStatus: ERROR | Isolate the colors:\n`, 'color: #FFFFFF; border-radius:4px; background: #E53D00; padding: 4px 8px;', 'Colors isolation failed! Please, check uploaded config file and make sure that it\'s real config file or COLORS object exist inside.')
       } else {
-         console.log(`%cStatus: OK | STEP 1.2 | Isolated colors [object]:\n`, 'color: #000000; border-radius:4px; background: #7CB518; padding: 4px 8px;', colors)
+         console.log(`%cStatus: OK | Isolated colors [object]:\n`, 'color: #000000; border-radius:4px; background: #7CB518; padding: 4px 8px;', colors)
       }
 
       Object.entries(colors).forEach(([name, color]) => {
@@ -345,6 +378,7 @@
          }
 
          const clearResults = nameArr.filter(clearUnused)
+
          function clearUnused(el) {
             if (el !== 'aaa' && el !== 'extras' && el !== '•') {
                return el
@@ -373,6 +407,7 @@
       }
 
       setTimeout(fillColorPalette, 1000)
+
       function fillColorPalette() {
          Object.entries(finalObj).forEach(([paletteTitle, variants]) => {
             const resultAreaCode = document.querySelector('.result-area__code')
@@ -391,8 +426,8 @@
                paletteGroup.appendChild(paletteVariant)
                paletteVariant.innerHTML +=
                   `<div class="color-variant__color-preview" style="background: ${color}"></div>
-            <div class="color-variant__value">${name}</div> :&nbsp;
-            <div class="color-variant__hex">${color}</div><div style="color: #FFA500">,</div>`
+                        <div class="color-variant__value">${name}</div> :&nbsp;
+                        <div class="color-variant__hex">${color}</div><div style="color: #FFA500">,</div>`
                paletteGroup.appendChild(paletteElClose)
                paletteElClose.classList.add('palette-closer', `${paletteTitle}`)
                paletteElClose.innerHTML = `<span style="color: #8d8d8d">},</span>`
@@ -412,12 +447,14 @@
       const finalObjJSON = JSON.stringify(finalObj, null, "\t")
       btnCopy.removeAttribute('disabled')
       downloadLink.removeAttribute('aria-label')
+
       function copyPaletteConfig() {
          navigator.clipboard.writeText(finalObjJSON)
          btnCopy.innerText = 'Config copied!'
          btnCopy.classList.add('--copied')
          setTimeout(restoreCopyBtn, 4000)
       }
+
       btnCopy.addEventListener('click', copyPaletteConfig)
 
       function restoreCopyBtn() {
@@ -429,7 +466,6 @@
       downloadLink.href = 'data:' + data
       downloadLink.download = 'tailwind-colors.config.js'
    }
-
 </script>
 </body>
 </html>

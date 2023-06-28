@@ -27,6 +27,13 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 ## Change log
 
+###### 2023-06-28
+
+- Add `back to main page` button for BO
+- Add `OK` and `Fail` info results in console
+- Add `error label` on upload area if was uploaded wrong config file
+- Removed import of font `Lato` with all variations
+
 ###### 2023-06-27
 
 - Finish the code that automates the upload process

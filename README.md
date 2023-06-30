@@ -13,19 +13,25 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 ---
 
-[//]: # (## Tasks)
+## Tasks
 
-[//]: # ()
+
 [//]: # (#### In Progress:)
 
-[//]: # ()
 
-[//]: # (#### Backlog:)
 
-[//]: # ()
-[//]: # (---)
+#### Backlog:
+
+- Add a filter, when `•` separator doesn't have `-` characters `before` and `after`. At the moment this case doesn't separate `default` color into 2 individual colors, rendering something like – `500•default: #f6544a`
+
+---
 
 ## Change log
+
+###### 2023-06-30
+
+- Add `transparent` filter to ignore empty palettes during refactoring.
+- Add the condition, if `palette name` in array is `empty` => don't render it on the page
 
 ###### 2023-06-28
 

@@ -371,7 +371,7 @@
       Object.entries(colors).forEach(([name, color]) => {
          const nameArr = name.split('-')
 
-         if (nameArr.includes('tailwind') || nameArr.includes('base')) {
+         if (nameArr.includes('tailwind') || nameArr.includes('base') || nameArr.includes('transparent')) {
             return
          } else {
             nameArr.join()
@@ -395,7 +395,9 @@
          } else {
             const lastElDefault = clearResults[clearResults.length - 1]
             clearResults.pop()
-            mergeResult(clearResults.join("-"), lastElDefault, color)
+            if(clearResults.join("-")) {
+               mergeResult(clearResults.join("-"), lastElDefault, color)
+            }
          }
       })
 

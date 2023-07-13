@@ -1,5 +1,5 @@
 import './scripts/copyConfig.js'
-import './scripts/fillColorPalette.js'
+import './scripts/renderColorPalette.js'
 import './scripts/startRegroup.js'
 import './scripts/uploadFile.js'
 

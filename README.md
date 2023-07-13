@@ -15,14 +15,20 @@ A script which will get and reorganize the colors palettes offered by **Figma** 
 
 ## Tasks
 
+#### In Progress:
 
-[//]: # (#### In Progress:)
-
-
+- Create `TryConvertToJSON` function to convert a `string` to a valid `JSON`:
+- - Remove all objects except `colors:`
+- - Replace all `'` into `"`
+- - Create a RegEx to set `"` on the start and on the end of `keys` which ends with `:`
+- - Wrap the code into `try/catch` to
+- - - If `parse` is unavailable, offer an option to use `eval()` with a **SERIOUS WARNING**
 
 #### Backlog:
 
 - Add a filter, when `•` separator doesn't have `-` characters `before` and `after`. At the moment this case doesn't separate `default` color into 2 individual colors, rendering something like – `500•default: #f6544a`
+- Change `default` color palette name to uppercase
+- Remove `quotes` from **variants** and ONE WORD **color palettes**
 
 ---
 

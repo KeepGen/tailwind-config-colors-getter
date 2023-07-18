@@ -1,6 +1,4 @@
-import { finalObj } from "./startRegroup.js";
-
-export default function renderColorPalette() {
+export default function renderColorPalette(finalObj) {
    Object.entries(finalObj).forEach(([paletteTitle, variants]) => {
       const resultAreaCode = document.querySelector('.result-area__code')
       const paletteGroup = document.createElement('div')
